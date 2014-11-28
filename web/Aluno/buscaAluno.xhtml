@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <link href="CSS.css" rel="stylesheet" type="text/css"/>
+        <title>Lista de Alunos</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">
+        <h:form>            
+            <h:panelGrid cellpadding="5" style="left: 25%;height: 800px">
+                    
+                <p:dataTable emptyMessage="Nada foi encontrado!" value="#{alunoMB.findAll()}" filteredValue="#{alunoMB.filtroAlunos}"
+                             widgetVar="AlunoTable" var="aluno">
+                    <f:facet name="header">
+                        <p:outputPanel>
+                        <h:outputText value="Digite o nome do aluno:" />
+                        <p:inputText id="globalFilter" onkeyup="PF('AlunoTable').filter();" style="width:250px"/>
+                        </p:outputPanel>
+                    </f:facet>
+                    <p:column  headerText="ID">  
+                        <h:outputLabel value="#{aluno.codaluno}"/>
+                    </p:column>
+                    <p:column headerText="Nome" filterBy="#{aluno.nome}">
+                        <h:outputLabel value="#{aluno.nome}"/>
+                    </p:column>
+                    <p:column headerText="Bairro">
+                        <h:dataTable value="#{aluno.enderecoList}" var="endereco" style="border: 0px #fff solid;">
+                            <h:column>#{endereco.bairro}</h:column>
+                        </h:dataTable>
+                    </p:column>
+                    <p:column headerText="Telefone">
+                        <h:dataTable value="#{aluno.telefoneList}" var="telefone" style="border: 0px #fff solid;">
+                            <h:column>#{telefone.telefone}</h:column>
+                        </h:dataTable>
+                    </p:column>
+                    
+                    <p:column>
+                        <p:commandButton icon="ui-icon-search" actionListener="#{alunoMB.mostrarAluno(aluno)}" onsuccess="PF('InfoAluno').show();"/>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton image="excluir" icon="ui-icon-trash" action="#{alunoMB.apagarAluno(aluno)}" ajax="false"/>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton image="editar" icon="ui-icon-pencil" action="#{alunoMB.prepararAlterarAluno(aluno)}" ajax="false"/>
+                    </p:column>
+                    
+                    
+
+                    
+                </p:dataTable>
+            </h:panelGrid>
+            <p:dialog header="Informações do Aluno" widgetVar="InfoAluno" dynamic="true" modal="true" 
+                      closable="false" closeOnEscape="true" style="width:640px ">
+                    <table>    
+                        <tr>                           
+                        <td>Id:</td><td>#{alunoMB.aluno.codaluno}</td>
+                        </tr>
+                        
+                        <tr>
+                        <td>Nome:</td><td>#{alunoMB.aluno.nome}</td>
+                        </tr>
+                        
+                        <tr>
+                        <td>Sexo:</td><td>#{alunoMB.aluno.sexo}</td>
+                        </tr>
+                        
+                        <tr>
+                        <td>Data de Nascimento:</td><td>#{alunoMB.aluno.datanascimento}</td>
+                        </tr>
+                        
+                        <tr>
+                        <td>Nome do Responsável:</td><td>#{alunoMB.aluno.nomeresponsavel}</td>
+                        </tr>
+                        
+                        <tr>
+                        <td>CPF do Responsável:</td><td>#{alunoMB.aluno.cpfresponsavel}</td>
+                        </tr>
+                        
+                        
+                        </table>
+                <p:dataTable value="#{alunoMB.aluno.enderecoList}" var="enderecoPorId" style="border: none">
+                            
+                            <p:column>Rua:
+                            #{enderecoPorId.logradouro}
+                            </p:column>
+                            
+                            <p:column>Número:
+                            #{enderecoPorId.numero}</p:column>
+                            
+                            <p:column>Complemento:
+                            #{enderecoPorId.complemento}</p:column>
+                            
+                            <p:column>Bairro:
+                            #{enderecoPorId.bairro}</p:column>
+                            
+                            <p:column>Cidade:
+                            #{enderecoPorId.cidade}</p:column>
+                            
+                            <p:column>Estado:
+                            #{enderecoPorId.uf.descricao}</p:column>
+                            
+                            <p:column>CEP:
+                            #{enderecoPorId.cep}</p:column>
+
+                </p:dataTable>
+                
+
+                <p:dataTable value="#{alunoMB.aluno.telefoneList}" var="telefonePorId">
+                    
+                            <p:column>Telefone:
+                            #{telefonePorId.telefone}    
+                            </p:column> 
+                    
+                </p:dataTable>
+                
+                <p:commandButton onclick="dialog.hide()" process="@none" value="Fechar" style="font-size: small"/>
+            </p:dialog>   
+        </h:form>
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

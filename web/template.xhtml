@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="title">Centro Educacional Carrossel</ui:insert></title>
+    <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+
+    <h:body>
+        <h1>
+            <ui:insert name="title">Centro Educacional Carrossel</ui:insert>
+        </h1>
+        <p>
+            <ui:insert name="menu">
+                <h:form>
+                    <p:megaMenu style="margin-top:30px">
+                    <p:submenu label="Alunos">
+                    <p:column>
+                        <p:submenu style="border: none; visibility: hidden">
+                            <p:menuitem value="Cadastrar Aluno">
+                                <a href="#{request.contextPath}/Aluno/cadastroAluno.xhtml"  style="text-decoration: none">Cadastrar Aluno</a>
+                            </p:menuitem>
+                        </p:submenu>
+                        <p:submenu style="border: none; visibility: hidden">
+                            <p:menuitem value="Lista de Alunos">
+                                <a href="#{request.contextPath}/Aluno/buscaAluno.xhtml" style="text-decoration: none">Buscar Alunos</a>
+                            </p:menuitem>
+                        </p:submenu>
+                    </p:column>
+                    </p:submenu>
+                    
+                    <p:submenu label="Turma">
+                    <p:column>
+                        <p:submenu style="border: none; visibility: hidden">
+                            <p:menuitem value="Cadastrar Turma">
+                                <a href="#{request.contextPath}/Turma/cadastroTurma.xhtml" style="text-decoration: none">Cadastrar Turma</a>
+                            </p:menuitem>
+                        </p:submenu>
+                    </p:column>
+                    </p:submenu>
+                    
+                    <p:submenu label="Frequência">
+                    <p:column>
+                        <p:submenu style="border: none; visibility: hidden">
+                            <p:menuitem value="Realizar Frequência">
+                                <a href="#{request.contextPath}/Frequencia/realizarFrequencia.xhtml" style="text-decoration: none">Realizar Frequência</a>
+                            </p:menuitem>
+                        </p:submenu>
+                    </p:column>
+                    </p:submenu>
+                        
+                    <p:submenu label="Materia">
+                    <p:column>
+                        <p:submenu style="border: none; visibility: hidden">
+                            <p:menuitem value="Cadastrar Matéria">
+                                <a href="#{request.contextPath}/Materia/cadastroMateria.xhtml" style="text-decoration: none">Cadastrar Matéria</a>
+                            </p:menuitem>
+                        </p:submenu>
+                        <p:submenu style="border: none; visibility: hidden">
+                            <p:menuitem value="Cadastrar Nota">
+                                <a href="#{request.contextPath}/Materia/cadastroNota.xhtml" style="text-decoration: none">Cadastrar Nota</a>
+                            </p:menuitem>
+                        </p:submenu>
+                    </p:column>
+                    </p:submenu>
+
+                </p:megaMenu>
+                </h:form>
+            </ui:insert>
+        </p>
+        <ui:insert name="body">
+        
+        </ui:insert>
+    </h:body>
+
+</html>

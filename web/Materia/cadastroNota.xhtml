@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Cadastro de Notas</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+        <ui:define name="body">
+            <h:form>
+            <h:panelGrid columns="1" cellpadding="5">
+                <p:column>
+                    <p:outputLabel for="turma" value="Turma:"/>
+                    <p:selectOneMenu id="turma" value="#{alunoMB.codTurma}" style="width:150px" var="turma" required="true">
+                        <p:ajax listener="#{alunoMB.findByTurma()}" update="cadastraNota"/>
+                        <f:selectItems value="#{turmaMB.findAll()}" var="turma" itemLabel="#{turma.descricao}" itemValue="#{turma.codturma}"/>
+                        </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <p:outputLabel for="materia" value="Matéria:"/>
+                        <p:selectOneMenu id="materia" value="#{alunoMB.codTurma}" style="width:150px" var="materia" required="true">
+                        <p:ajax listener="#{alunoMB.findByTurma()}" update="cadastraNota"/>
+                        <f:selectItems value="#{materiaMB.findAll()}" var="materia" itemLabel="#{materia.descricao}" itemValue="#{materia.codmateria}"/>
+                        </p:selectOneMenu>
+                </p:column>
+                
+                <p:dataTable emptyMessage="Selecione a turma." id="cadastraNota" value="#{alunoMB.listaAluno}" 
+                             var="alunoNota">
+                    <p:column headerText="ID">  
+                         <h:outputLabel value="#{alunoNota.codaluno}"/>
+                    </p:column>
+                    <p:column headerText="Nome">  
+                         <h:outputLabel value="#{alunoNota.nome}"/>
+                    </p:column>
+                    <p:column headerText="Matéria">  
+                        <h:outputLabel value="#{materia.descricao}"/>
+                    </p:column>
+                     <p:column headerText="Nota">  
+                         <p:selectOneMenu id="sexo" value="#{avaliacaoMB.avaliacao.nota}">
+                            <f:selectItem itemLabel="Ótimo" itemValue="O"/>
+                            <f:selectItem itemLabel="Muito Bom" itemValue="MB"/>
+                            <f:selectItem itemLabel="Bom" itemValue="B"/>
+                            <f:selectItem itemLabel="Regular" itemValue="R"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+            </h:form>
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
