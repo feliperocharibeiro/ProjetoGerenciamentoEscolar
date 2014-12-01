@@ -9,12 +9,15 @@
         <title>Cadastro de Alunos</title>
     </h:head>
     <h:body>
+        <script src="funcoes.js" type="text/javascript"></script>
+        
         <ui:composition template="/template.xhtml">
         <ui:define name="body">
         <h:form id="formCadastroAlunos">
         <p:panel style="font: sans-serif; font-size: medium" header="Cadastro de Alunos" id="cadastrarAluno">
             <p:messages autoUpdate="true"/>
-            <p:tabView style="font-size: small">
+            <!--<p:tabView style="font-size: small">-->
+            <p:wizard style="font-size: small">
         
             <p:tab title="Dados do Aluno">  
                 <h:panelGrid style="font-size: small;" id="dadosAluno"  columns="3" cellpadding="1" cellspacing="1"> 
@@ -33,13 +36,14 @@
                 </p:selectOneMenu>
                 <br/>
                 <h:outputLabel style="font-weight:bold" for="dataNascimento" value="Data de Nascimento:"/>
-                <p:inputMask required="true" requiredMessage="Campo Obrigatório!" id="dataNascimento" value="#{alunoMB.aluno.datanascimento}" mask="99/99/9999"/>  
-                <br/>
+                <p:inputMask required="true" requiredMessage="Campo Obrigatório!" id="dataNascimento" value="#{alunoMB.aluno.datanascimento}" mask="99/99/9999"/> 
+                <p:message for="dataNascimento" display="icon"/>
+                
 
 
 
 
-                <h:outputText value="Série: " style="font-weight:bold" />  
+                <h:outputText value="Turma: " style="font-weight:bold" />  
                 <p:selectOneMenu id="turma" value="#{alunoMB.codTurma}">  
                 <f:selectItem itemLabel="Maternal" itemValue="1" />  
                 <f:selectItem itemLabel="Jardim I" itemValue="2" />  
@@ -57,7 +61,7 @@
 
 
                 <h:outputLabel for="cpfPai" value="CPF do Responsável:" style="font-weight:bold"/> 
-                <p:inputMask required="true" requiredMessage="Campo Obrigatório!" id="cpfPai" value="#{alunoMB.aluno.cpfresponsavel}" mask="999.999.999-99"/>
+                <p:inputMask required="true" requiredMessage="Campo Obrigatório!" onkeypress="javascript: return EntradaNumerico(event);" id="cpfPai" value="#{alunoMB.aluno.cpfresponsavel}" mask="999.999.999-99"/>
  
 
 
@@ -120,19 +124,77 @@
 
                 <h:outputLabel style="font-weight:bold" for="Telefone" value="Telefone de Contato:"/>
                 <p:inputMask required="true" requiredMessage="Campo Obrigatório!" id="Telefone" value="#{alunoMB.telefone.telefone}" mask="(99)9999-9999"/>
-
+                
                 </h:panelGrid>
+                
                 </p:tab>
-                </p:tabView>
+                <p:tab id="confirmar" title="Confirmar">
+                    
+                <p:panel header="Confirmar" style="font: sans-serif; font-size: medium">
+                    <h:panelGrid id="confirma" columns="3" columnClasses="grid,grid,grid" style="font-size: small">
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                        <h:outputText value="Nome Completo do Aluno: " style="font-weight:bold" />
+                        <h:outputText value="#{alunoMB.aluno.nome}" styleClass="outputLabel"/>
+                        
+                        <h:outputText value="Sexo: " style="font-weight:bold"/>
+                        <h:outputText value="#{alunoMB.aluno.sexo}" styleClass="outputLabel"/>
+                        
+                        <h:outputText value="Data de Nascimento: " style="font-weight:bold" />
+                        <h:outputText value="#{alunoMB.aluno.datanascimento}" styleClass="outputLabel"/>
+                        
+                        <h:outputText value="Turma: " style="font-weight:bold" />
+                        <h:outputText value="#{alunoMB.codTurma}" styleClass="outputLabel"/>
+                        
+                        <h:outputText value="Data de Nascimento: " style="font-weight:bold" />
+                        <h:outputText value="#{alunoMB.aluno.datanascimento}" styleClass="outputLabel"/>
+                    </h:panelGrid>
+ 
+                    <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Nome do Responsável: " style="font-weight:bold" />
+                            <h:outputText value="#{alunoMB.aluno.nomeresponsavel}" styleClass="outputLabel"/>
+                            
+                            <h:outputText value="CPF do Responsável: " style="font-weight:bold" />
+                            <h:outputText value="#{alunoMB.aluno.cpfresponsavel}" styleClass="outputLabel"/>
+                    </h:panelGrid>
+                        
+                    <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Rua: " style="font-weight:bold" />
+                            <h:outputText value="#{alunoMB.endereco.logradouro}" styleClass="outputLabel"/>
+                            
+                            <h:outputText value="Número: " style="font-weight:bold" />
+                            <h:outputText value="#{alunoMB.endereco.numero}" styleClass="outputLabel"/>
+                            
+                            <h:outputText value="Complemento: " style="font-weight:bold" />
+                            <h:outputText value="#{alunoMB.endereco.complemento}" styleClass="outputLabel"/>
+                            
+                            <h:outputText value="Bairro: " style="font-weight:bold" />
+                            <h:outputText value="#{alunoMB.endereco.bairro}" styleClass="outputLabel"/>
+                            
+                            <h:outputText value="Cidade: " style="font-weight:bold" />
+                            <h:outputText value="#{alunoMB.endereco.cidade}" styleClass="outputLabel"/>
+                            
+                            <h:outputText value="Estado: " style="font-weight:bold" />
+                            <h:outputText value="#{alunoMB.codUf}" styleClass="outputLabel"/>
+                            
+                            <h:outputText value="CEP: " style="font-weight:bold" />
+                            <h:outputText value="#{alunoMB.endereco.cep}" styleClass="outputLabel"/>
+                            
+                            <h:outputText value="Telefone: " style="font-weight:bold" />
+                            <h:outputText value="#{alunoMB.telefone.telefone}" styleClass="outputLabel"/>
+
+                    </h:panelGrid>
+                        
+                </h:panelGrid>
+                    
+                <p:commandButton value="Confirmar" action="#{alunoMB.salvarAluno()}" update="@form" style="margin-right:10px" ajax="false"/>
+                </p:panel>
+                </p:tab>
+                    
+                </p:wizard>
+                <!--</p:tabView>-->
         </p:panel>
             
             <p:separator/>
-            
-
-            <h:panelGrid style="font-size: small;" id="botoes"  columns="4" cellpadding="1" cellspacing="1">
-                <p:commandButton value="Salvar" action="#{alunoMB.salvarAluno()}" update="@form" style="margin-right:10px" ajax="false"/>
-                <p:commandButton value="Limpar" type="reset" style="margin-right:10px" ajax="false"/>
-            </h:panelGrid>   
 
            
         </h:form>

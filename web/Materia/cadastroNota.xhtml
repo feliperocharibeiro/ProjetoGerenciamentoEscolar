@@ -22,8 +22,8 @@
                 </p:column>
                 <p:column>
                     <p:outputLabel for="materia" value="Matéria:"/>
-                        <p:selectOneMenu id="materia" value="#{alunoMB.codTurma}" style="width:150px" var="materia" required="true">
-                        <p:ajax listener="#{alunoMB.findByTurma()}" update="cadastraNota"/>
+                    <p:selectOneMenu id="materia" value="#{materiaMB.codMateria}" style="width:150px" var="materia" required="true">
+                        <p:ajax listener="#{materiaMB.findById()}"/>
                         <f:selectItems value="#{materiaMB.findAll()}" var="materia" itemLabel="#{materia.descricao}" itemValue="#{materia.codmateria}"/>
                         </p:selectOneMenu>
                 </p:column>
@@ -37,7 +37,9 @@
                          <h:outputLabel value="#{alunoNota.nome}"/>
                     </p:column>
                     <p:column headerText="Matéria">  
-                        <h:outputLabel value="#{materia.descricao}"/>
+                    <p:dataTable id="materiaForm" value="#{materiaMB.listaMateria}" var="notaMateria"> 
+                        <h:outputLabel value="#{notaMateria.descricao}"/>
+                    </p:dataTable>
                     </p:column>
                      <p:column headerText="Nota">  
                          <p:selectOneMenu id="sexo" value="#{avaliacaoMB.avaliacao.nota}">
@@ -48,6 +50,9 @@
                         </p:selectOneMenu>
                     </p:column>
                 </p:dataTable>
+                <p:column>
+                    <p:commandButton action="#{materiaAlunoMB.salvarNota()}" value="Salvar Notas" />
+                </p:column>
             </h:panelGrid>
             </h:form>
         </ui:define>

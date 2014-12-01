@@ -9,6 +9,7 @@ package view;
 import controller.MateriaDAO;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import model.Materia;
 
@@ -16,17 +17,50 @@ import model.Materia;
  *
  * @author Felipe Rocha Ribeiro
  */
-@ManagedBean
-@ViewScoped
+@ManagedBean(name = "materiaMB")
+@SessionScoped
 public class MateriaMB {
 
     private MateriaDAO materiaDAO;
     
     private Materia materia;
     
+    private String nomeMateria;
+    private int codMateria;
+    
+    private List<Materia> listaMateria;
+    
     public MateriaMB() {
         materia = new Materia();
     }
+
+    public int getCodMateria() {
+        return codMateria;
+    }
+
+    public void setCodMateria(int codMateria) {
+        this.codMateria = codMateria;
+    }
+
+    
+    
+    public List<Materia> getListaMateria() {
+        return listaMateria;
+    }
+
+    public void setListaMateria(List<Materia> listaMateria) {
+        this.listaMateria = listaMateria;
+    }
+    
+
+    public String getNomeMateria() {
+        return nomeMateria;
+    }
+
+    public void setNomeMateria(String nomeMateria) {
+        this.nomeMateria = nomeMateria;
+    }
+    
 
     public Materia getMateria() {
         return materia;
@@ -40,6 +74,18 @@ public class MateriaMB {
         try {
             materiaDAO = new MateriaDAO();
             return materiaDAO.findAll();
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+    
+    public List<Materia> findById(){
+        try {
+            materiaDAO = new MateriaDAO();
+            System.out.println(codMateria);
+            listaMateria = materiaDAO.findById(codMateria);
+            return listaMateria;
         } catch (Exception e) {
             System.out.println(e);
             return null;

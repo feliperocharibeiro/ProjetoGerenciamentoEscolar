@@ -31,4 +31,10 @@ public class MateriaDAO extends Classe{
         em.getTransaction().commit();
         return query.getResultList();
     }
+    public List<Materia> findById(int cod){
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Materia.findByCodmateria").setParameter("codmateria", cod);
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
 }
