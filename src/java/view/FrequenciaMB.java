@@ -124,12 +124,11 @@ public class FrequenciaMB {
             
             frequenciaDAO = new FrequenciaDAO();
             alunoDAO = new AlunoDAO();
-            System.out.println(codAluno);
             
             List<Aluno> lista = alunoMB.getListaAluno();
-            System.out.println("Tamanho lista Frequencia:"+lista.size());
+
             for(Aluno a:lista){
-                System.out.println("Lista da Frequencia:"+a.getNome());
+
                 frequencia.setCodaluno(a);
                 frequencia.setDescricao(a.isDescricao());
                 frequencia.setDataaula(dataAula);

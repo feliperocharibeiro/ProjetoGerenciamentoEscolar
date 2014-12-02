@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Cadastro de Notas</title>
+        <title>Facelet Title</title>
     </h:head>
     <h:body>
         <ui:composition template="/template.xhtml">
@@ -16,49 +16,60 @@
                 <p:column>
                     <p:outputLabel for="turma" value="Turma:"/>
                     <p:selectOneMenu id="turma" value="#{alunoMB.codTurma}" style="width:150px" var="turma" required="true">
-                        <p:ajax listener="#{alunoMB.findByTurma()}" update="cadastraNota"/>
+                        <p:ajax listener="#{alunoMB.findByTurma()}" update="geraNota"/>
                         <f:selectItems value="#{turmaMB.findAll()}" var="turma" itemLabel="#{turma.descricao}" itemValue="#{turma.codturma}"/>
                         </p:selectOneMenu>
                 </p:column>
                 <p:column>
                     <p:outputLabel for="periodo" value="Período:"/>
                     <p:selectOneMenu id="periodo" value="#{materiaAlunoMB.periodo}" style="width:150px" var="materia" required="true">
+                        <p:ajax listener="#{materiaAlunoMB.findByPeriodo()}"/>
+                        
                             <f:selectItem itemLabel="Primeiro Bimestre" itemValue="Primeiro Bimestre"/>
                             <f:selectItem itemLabel="Segundo Bimestre" itemValue="Segundo Bimestre"/>
                             <f:selectItem itemLabel="Terceiro Bimestre" itemValue="Terceiro Bimestre"/>
                             <f:selectItem itemLabel="Quarto Bimestre" itemValue="Quarto Bimestre"/>
                     </p:selectOneMenu>
                 </p:column>
-                <p:column>
-                    <p:outputLabel for="materia" value="Matéria:"/>
-                    <p:selectOneMenu id="materia" value="#{materiaMB.codMateria}" style="width:150px" var="materia" required="true">
-                        <p:ajax listener="#{materiaMB.findById()}" />
-                        <f:selectItems value="#{materiaMB.findAll()}" var="materia" itemLabel="#{materia.descricao}" itemValue="#{materia.codmateria}"/>
-                        </p:selectOneMenu>
-                </p:column>
                 
-                <p:dataTable emptyMessage="Selecione a turma." id="cadastraNota" value="#{alunoMB.listaAluno}" 
-                             var="alunoNota">
+                
+                <p:dataTable emptyMessage="Selecione a turma." id="geraNota" value="#{alunoMB.listaAluno}" 
+                             var="aluno">
                     <p:column headerText="ID">  
-                         <h:outputLabel value="#{alunoNota.codaluno}"/>
+                        <h:outputLabel value="#{aluno.codaluno}"/>
                     </p:column>
                     <p:column headerText="Nome">  
-                         <h:outputLabel value="#{alunoNota.nome}"/>
+                        <h:outputLabel value="#{aluno.nome}"/>
                     </p:column>
-
-                     <p:column headerText="Nota">  
-                         <p:selectOneMenu id="nota" value="#{alunoNota.nota}">
-                            <f:selectItem itemLabel="Ótimo" itemValue="O"/>
-                            <f:selectItem itemLabel="Muito Bom" itemValue="MB"/>
-                            <f:selectItem itemLabel="Bom" itemValue="B"/>
-                            <f:selectItem itemLabel="Regular" itemValue="R"/>
-                        </p:selectOneMenu>
+                    <p:column>
+                        <p:commandButton icon="ui-icon-note" title="Gerar Boletim" actionListener="#{alunoMB.mostrarAluno(aluno)}" onsuccess="PF('Boletim').show();"/>
                     </p:column>
                 </p:dataTable>
-                <p:column>
-                    <p:commandButton action="#{materiaAlunoMB.salvarNota()}" value="Salvar Notas" />
-                </p:column>
             </h:panelGrid>
+                
+                 <p:dialog header="Boletim" widgetVar="Boletim" dynamic="true" modal="true" 
+                           closable="false" closeOnEscape="true" style="width:640px ">
+                        
+                     <table>    
+                        <tr>                           
+                        <td>Nome:</td><td>#{alunoMB.aluno.nome}</td>
+                        </tr>
+                     </table>
+                     <p:dataTable value="#{alunoMB.aluno.materiaAlunoList}" id="materiaAlunoPorId" var="materiaAlunoPorId">
+                            <p:column headerText="Matéria">
+                            #{materiaAlunoPorId.codmateria.descricao}    
+                            </p:column>
+                            <p:column headerText="Nota">
+                            #{materiaAlunoPorId.nota}    
+                            </p:column> 
+
+                            <p:column headerText="Periodo">
+                            #{materiaAlunoPorId.periodo}    
+                            </p:column> 
+                         
+                     </p:dataTable>
+                    <p:commandButton onclick="dialog.hide()" process="@none" value="Fechar" style="font-size: small"/>
+                 </p:dialog>
             </h:form>
         </ui:define>
         </ui:composition>

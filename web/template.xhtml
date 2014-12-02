@@ -12,7 +12,11 @@
 
     <h:body>
         <h1>
-            <ui:insert name="title">Centro Educacional Carrossel</ui:insert>
+            
+            <ui:insert name="title">
+                <img src="#{request.contextPath}/resources/imagens/LOGO.png" alt="Centro Educacional Carrossel" align="center"/>
+                Centro Educacional Carrossel
+            </ui:insert>
         </h1>
         <p>
             <ui:insert name="menu">
@@ -63,6 +67,11 @@
                         <p:submenu style="border: none; visibility: hidden">
                             <p:menuitem value="Cadastrar Nota">
                                 <a href="#{request.contextPath}/Materia/cadastroNota.xhtml" style="text-decoration: none">Cadastrar Nota</a>
+                            </p:menuitem>
+                        </p:submenu>
+                        <p:submenu style="border: none; visibility: hidden">
+                            <p:menuitem value="Buscar Notas">
+                                <a href="#{request.contextPath}/Materia/mostraNotas.xhtml" style="text-decoration: none">Buscar Notas</a>
                             </p:menuitem>
                         </p:submenu>
                     </p:column>

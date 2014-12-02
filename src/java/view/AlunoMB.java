@@ -175,7 +175,7 @@ public class AlunoMB {
             for(Aluno a:listaAluno){
                 System.out.println("lista do for:"+a.getNome());
             }
-            return listaAluno;//alunoDAO.findByTurma(turmaDAO.findById(codTurma));
+            return listaAluno;
         } catch (Exception e) {
             System.out.println(e);
             return null;

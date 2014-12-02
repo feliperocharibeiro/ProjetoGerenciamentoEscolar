@@ -21,7 +21,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -43,6 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Aluno.findByNomeresponsavel", query = "SELECT a FROM Aluno a WHERE a.nomeresponsavel = :nomeresponsavel"),
     @NamedQuery(name = "Aluno.findByCpfresponsavel", query = "SELECT a FROM Aluno a WHERE a.cpfresponsavel = :cpfresponsavel")})
 public class Aluno implements Serializable {
+    @Column(name = "nota")
+    private String nota;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codaluno")
     private List<Telefone> telefoneList = new ArrayList<Telefone>();
     private static final long serialVersionUID = 1L;
@@ -72,8 +73,6 @@ public class Aluno implements Serializable {
     @ManyToOne(optional = false)
     private Turma codturma;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codaluno")
-    private List<Mensalidade> mensalidadeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codaluno")
     private List<MateriaAluno> materiaAlunoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codaluno")
     private List<Endereco> enderecoList = new ArrayList<Endereco>();
@@ -88,7 +87,16 @@ public class Aluno implements Serializable {
     public void setDescricao(boolean descricao) {
         this.descricao = descricao;
     }
-    
+
+        
+    public String getNota() {
+        return nota;
+    }
+
+    public void setNota(String nota) {
+        this.nota = nota;
+    }
+        
     public Aluno() {
         this.enderecoList = new ArrayList<Endereco>();
     }
@@ -174,15 +182,6 @@ public class Aluno implements Serializable {
     }
 
     @XmlTransient
-    public List<Mensalidade> getMensalidadeList() {
-        return mensalidadeList;
-    }
-
-    public void setMensalidadeList(List<Mensalidade> mensalidadeList) {
-        this.mensalidadeList = mensalidadeList;
-    }
-
-    @XmlTransient
     public List<MateriaAluno> getMateriaAlunoList() {
         return materiaAlunoList;
     }
@@ -233,5 +232,6 @@ public class Aluno implements Serializable {
     public void setTelefoneList(List<Telefone> telefoneList) {
         this.telefoneList = telefoneList;
     }
-    
+
+        
 }

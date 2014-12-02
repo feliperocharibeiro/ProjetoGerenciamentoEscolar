@@ -29,6 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MateriaAluno.findAll", query = "SELECT m FROM MateriaAluno m"),
+    @NamedQuery(name = "MateriaAluno.findByPeriodo", query = "SELECT m FROM MateriaAluno m WHERE m.periodo LIKE :periodo"),
+    @NamedQuery(name = "MateriaAluno.findByMateria", query = "SELECT m FROM MateriaAluno m WHERE m.codmateria = :codmateria"),
     @NamedQuery(name = "MateriaAluno.findByIdmateriaaluno", query = "SELECT m FROM MateriaAluno m WHERE m.idmateriaaluno = :idmateriaaluno")})
 public class MateriaAluno implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -43,7 +45,29 @@ public class MateriaAluno implements Serializable {
     @JoinColumn(name = "CODALUNO", referencedColumnName = "CODALUNO")
     @ManyToOne(optional = false)
     private Aluno codaluno;
+    @Basic(optional = false)
+    @Column(name = "NOTA")
+    private String nota;
+    @Basic(optional = false)
+    @Column(name = "PERIODO")
+    private String periodo;
 
+    public String getNota() {
+        return nota;
+    }
+
+    public void setNota(String nota) {
+        this.nota = nota;
+    }
+
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+    
     public MateriaAluno() {
     }
 

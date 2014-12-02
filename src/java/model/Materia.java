@@ -45,8 +45,6 @@ public class Materia implements Serializable {
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codmateria")
     private List<MateriaAluno> materiaAlunoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codmateria")
-    private List<Avaliacao> avaliacaoList;
 
     public Materia() {
     }
@@ -85,15 +83,6 @@ public class Materia implements Serializable {
         this.materiaAlunoList = materiaAlunoList;
     }
 
-    @XmlTransient
-    public List<Avaliacao> getAvaliacaoList() {
-        return avaliacaoList;
-    }
-
-    public void setAvaliacaoList(List<Avaliacao> avaliacaoList) {
-        this.avaliacaoList = avaliacaoList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -118,5 +107,6 @@ public class Materia implements Serializable {
     public String toString() {
         return "model.Materia[ codmateria=" + codmateria + " ]";
     }
+
     
 }

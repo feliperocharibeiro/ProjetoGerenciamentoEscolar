@@ -9,7 +9,9 @@
         <link href="CSS.css" rel="stylesheet" type="text/css"/>
         <title>Lista de Alunos</title>
     </h:head>
+    
     <h:body>
+        
         <ui:composition template="/template.xhtml">
             <ui:define name="body">
         <h:form>            
@@ -41,20 +43,19 @@
                     </p:column>
                     
                     <p:column>
-                        <p:commandButton icon="ui-icon-search" actionListener="#{alunoMB.mostrarAluno(aluno)}" onsuccess="PF('InfoAluno').show();"/>
+                        <p:commandButton icon="ui-icon-search" title="Informações do Aluno" actionListener="#{alunoMB.mostrarAluno(aluno)}" onsuccess="PF('InfoAluno').show();"/>
                     </p:column>
                     <p:column>
-                        <p:commandButton image="excluir" icon="ui-icon-trash" action="#{alunoMB.apagarAluno(aluno)}" ajax="false"/>
+                        <p:commandButton image="excluir" icon="ui-icon-trash" title="Apagar" action="#{alunoMB.apagarAluno(aluno)}" ajax="false"/>
                     </p:column>
                     <p:column>
-                        <p:commandButton image="editar" icon="ui-icon-pencil" action="#{alunoMB.prepararAlterarAluno(aluno)}" ajax="false"/>
+                        <p:commandButton image="editar" icon="ui-icon-pencil" title="Editar" action="#{alunoMB.prepararAlterarAluno(aluno)}" ajax="false"/>
                     </p:column>
-                    
-                    
-
                     
                 </p:dataTable>
             </h:panelGrid>
+            
+            
             <p:dialog header="Informações do Aluno" widgetVar="InfoAluno" dynamic="true" modal="true" 
                       closable="false" closeOnEscape="true" style="width:640px ">
                     <table>    

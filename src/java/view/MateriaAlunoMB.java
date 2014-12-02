@@ -7,16 +7,13 @@
 package view;
 
 import controller.AlunoDAO;
-import controller.AvaliacaoDAO;
 import controller.MateriaAlunoDAO;
 import controller.MateriaDAO;
-import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import model.Aluno;
-import model.Avaliacao;
 import model.Materia;
 import model.MateriaAluno;
 
@@ -31,15 +28,14 @@ public class MateriaAlunoMB {
     private MateriaAlunoDAO materiaAlunoDAO;
     private AlunoDAO alunoDAO;
     private MateriaDAO materiaDAO;
-    private AvaliacaoDAO avaliacaoDAO;
     
     private MateriaAluno materiaAluno;
     private Aluno aluno;
     private Materia materia;
-    private Avaliacao avaliacao;
     
     private String nota;
     private String codMateria;
+    private String periodo;
     
     @ManagedProperty(value="#{alunoMB}")
     private AlunoMB alunoMB;
@@ -51,6 +47,15 @@ public class MateriaAlunoMB {
         materiaAluno = new MateriaAluno();
     }
 
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+
+        
     public String getCodMateria() {
         return codMateria;
     }
@@ -85,13 +90,6 @@ public class MateriaAlunoMB {
         this.materia = materia;
     }
 
-    public Avaliacao getAvaliacao() {
-        return avaliacao;
-    }
-
-    public void setAvaliacao(Avaliacao avaliacao) {
-        this.avaliacao = avaliacao;
-    }
 
     public String getNota() {
         return nota;
@@ -160,32 +158,48 @@ public class MateriaAlunoMB {
 
     }
     
-    public void salvarNota(){
+    public String salvarNota(){
         try {
             alunoDAO = new AlunoDAO();
             materiaDAO = new MateriaDAO();
             materiaAlunoDAO = new MateriaAlunoDAO();
-            avaliacaoDAO = new AvaliacaoDAO();
             
             
             List<Aluno> lista = alunoMB.getListaAluno();
             List<Materia> listaMateria = materiaMB.getListaMateria();
             
             System.out.println("Tamanho lista em Materia:"+lista.size());
-            System.out.println("Lista das Materias dentro da Materia:" + listaMateria.size());
+            System.out.println("Tamanho da Lista de Materia:" + listaMateria.size());
+            for(Materia m:listaMateria){
             for(Aluno a:lista){
                 System.out.println("Lista da Materia:"+a.getNome());
+                System.out.println("Nome da Materia:"+m.getDescricao());
                 materiaAluno.setCodaluno(a);
-                //avaliacao.setCodmateria(materia);
-                //avaliacao.setNota(nota);
+                materiaAluno.setCodmateria(m);
+                System.out.println("NOTA"+a.getNota());
+                materiaAluno.setNota(a.getNota());
+                materiaAluno.setPeriodo(periodo);
                 
-                //materiaAlunoDAO.salvarMateriaAluno(materiaAluno);
-                //materiaAluno = new MateriaAluno();
-                //avaliacao = new Avaliacao();
+                materiaAlunoDAO.salvarMateriaAluno(materiaAluno);
+                materiaAluno = new MateriaAluno();
+                }
             }
-            
         } catch (Exception e) {
             System.out.println(e);
         }
+        return "cadastroNota.xhtml";
+    }
+    
+    public List<MateriaAluno> findByPeriodo(){
+        try {
+            materiaDAO = new MateriaDAO();
+            materiaAlunoDAO = new MateriaAlunoDAO();
+            System.out.println(periodo);
+            return materiaAlunoDAO.findByPeriodo(periodo);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+        
     }
 }
