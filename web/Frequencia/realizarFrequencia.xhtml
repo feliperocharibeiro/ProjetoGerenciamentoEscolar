@@ -12,10 +12,12 @@
         <ui:composition template="/template.xhtml">
         <ui:define name="body">
         <h:form>
-            <h:panelGrid columns="1" cellpadding="5">
+            <p:panel style="font: sans-serif; font-size: medium" header="Registrar Frequencia" id="registrarFrequencia">
+            <h:panelGrid columns="1" cellpadding="5" style="font-size: small">
                 <p:column>
                     <p:outputLabel for="dataaula" value="Data da Aula:"/>
-                    <p:calendar id="dataaula" value="#{frequenciaMB.dataAula}" showOn="button" required="true" />
+                    <h:outputScript library="js" name="jquery.ui.datepicker-pt-BR.js"/>
+                    <p:calendar id="dataaula" locale="pt" value="#{frequenciaMB.dataAula}"  showOn="button" required="true"/>
                 </p:column>
                     <p:column>
                 <p:outputLabel for="turma" value="Turma:"/>
@@ -44,9 +46,11 @@
                 </p:dataTable>
                 <p:column>
                     <p:commandButton action="#{frequenciaMB.registrarFrequencia()}" value="Registrar Frequência" />
+                    <p:commandButton value="Cancelar" update="@form" action="#{frequenciaMB.removeSessão()}" style="margin-right:10px" ajax="false"/>
                 </p:column>
             </h:panelGrid>
-            <p:separator />
+            </p:panel>
+
         </h:form>
         </ui:define>
         </ui:composition>

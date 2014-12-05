@@ -12,19 +12,19 @@
         <ui:define name="body">
         <h:form id="formCadastroMateria">
         <p:panel style="font: sans-serif; font-size: medium" header="Cadastro de Materia" id="cadastrarMateria">
-            <h:panelGrid style="font-size: small;" id="dadosMateria"  columns="3" cellpadding="1" cellspacing="1"> 
+            <h:panelGrid style="font-size: small;" id="dadosMateria"  columns="1" cellpadding="1" cellspacing="1"> 
 
-                    <h:outputLabel  for="materia" value="Nome da Materia:" style="font-weight:bold"/> 
-                    <p:inputText required="true" id="materia" requiredMessage="Campo Obrigatório!" value="#{materiaMB.materia.descricao}"/>
+                    <p:column>
+                        <h:outputLabel  for="materia" value="Nome da Materia:" style="font-weight:bold"/> 
+                        <p:inputText required="true" id="materia" requiredMessage="Campo Obrigatório!" value="#{materiaMB.materia.descricao}"/>
+                    </p:column>    
+                    <p:column>
+                        <p:commandButton value="Salvar" action="#{materiaMB.salvarMateria()}" update="@form" style="margin-right:10px" ajax="false"/>
+                        <p:commandButton value="Cancelar" update="formCadastroMateria" action="#{materiaMB.removeSessão()}" style="margin-right:10px" ajax="false"/>
+                    </p:column>
             </h:panelGrid>
         </p:panel>
-            
-            
-    <h:panelGrid style="font-size: small;" id="botoes"  columns="4" cellpadding="1" cellspacing="1">
-        <p:commandButton value="Salvar" action="#{materiaMB.salvarMateria()}" update="@form" style="margin-right:10px" ajax="false"/>
-        <p:commandButton value="Cancelar" immediate="true" action="../ProjetoGerenciamentoEscolar/index.xhtml" style="margin-right:10px" ajax="false"/>
-    </h:panelGrid>
-        
+
         </h:form>
         </ui:define>
         </ui:composition>

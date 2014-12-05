@@ -9,7 +9,6 @@
         <title><ui:insert name="title">Centro Educacional Carrossel</ui:insert></title>
     <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
-
     <h:body>
         <h1>
             
@@ -44,6 +43,11 @@
                                 <a href="#{request.contextPath}/Turma/cadastroTurma.xhtml" style="text-decoration: none">Cadastrar Turma</a>
                             </p:menuitem>
                         </p:submenu>
+                        <p:submenu style="border: none; visibility: hidden">
+                            <p:menuitem value="Listar Turmas">
+                                <a href="#{request.contextPath}/Turma/listaTurma.xhtml" style="text-decoration: none">Listar Turmas</a>
+                            </p:menuitem>
+                        </p:submenu>
                     </p:column>
                     </p:submenu>
                     
@@ -52,6 +56,11 @@
                         <p:submenu style="border: none; visibility: hidden">
                             <p:menuitem value="Realizar Frequência">
                                 <a href="#{request.contextPath}/Frequencia/realizarFrequencia.xhtml" style="text-decoration: none">Realizar Frequência</a>
+                            </p:menuitem>
+                        </p:submenu>
+                        <p:submenu style="border: none; visibility: hidden">
+                            <p:menuitem value="Mostrar Faltas">
+                                <a href="#{request.contextPath}/Frequencia/mostrarFaltas.xhtml" style="text-decoration: none">Mostrar Frequência</a>
                             </p:menuitem>
                         </p:submenu>
                     </p:column>

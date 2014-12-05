@@ -3,59 +3,75 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Editar Aluno</title>
     </h:head>
     <h:body>
+        <ui:composition template="/template.xhtml">
+        <ui:define name="body">
             <h:form id="formAlterarAlunos">
             
-            <p:panel header="Alteração de Alunos" id="cadastrarAluno" >  
-            <p:messages autoUpdate="true"/>   
-            <h:panelGrid id="grid" columns="3" cellpadding="2" cellspacing="2"> 
-            
-            <h:outputLabel for="nome" value="Nome:" style="font-weight:bold"/> 
-            <p:inputText required="true" value="#{alunoMB.aluno.nome}"/>
-            
-            <br/>
-            <h:outputLabel for="sexo" style="font-weight:bold" value="Selecione o sexo:"/>
-            <p:selectOneMenu value="#{alunoMB.aluno.sexo}">
-                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
-                <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>                               
-            </p:selectOneMenu>
-            
-            <br/>
-            <h:outputLabel style="font-weight:bold" for="dataNascimento" value="Data de Nascimento:"/>
-            <p:inputMask required="true" value="#{alunoMB.aluno.nascimento}" mask="99/99/9999"/>  
-            <br/>
-            
-             <h:outputText value="Série: " style="font-weight:bold" />  
-             <p:selectOneRadio id="series" value="#{alunoMB.aluno.turma}" >  
-            <f:selectItem itemLabel="Maternal" itemValue="Maternal" />  
-            <f:selectItem itemLabel="Jardim I" itemValue="Jardim I" />  
-            <f:selectItem itemLabel="Jardim II" itemValue="Jardim II" />  
-        </p:selectOneRadio>  
-             <br/>
-             <h:outputLabel for="nomePai" value="Nome do Pai:" style="font-weight:bold"/> 
-            <p:inputText required="true" value="#{alunoMB.aluno.nomePai}"/>
-            <br/>
-            <h:outputLabel for="nomeMae" value="Nome da Mãe:" style="font-weight:bold"/> 
-            <p:inputText required="true" value="#{alunoMB.aluno.nomeMae}"/>
-            <br/>
-            <h:outputLabel for="endereco" value="Endereço:" style="font-weight:bold"/> 
-            <p:inputText required="true" value="#{alunoMB.aluno.endereco}"/>
-            <br/>
-            <h:outputLabel style="font-weight:bold" for="Telefone" value="Telefone de Contato:"/>
-            <p:inputMask required="true" value="#{alunoMB.aluno.telefone}" mask="(99)9999-9999"/>
-            
-            
-                       
-            </h:panelGrid>
-            <p:commandButton value="Salvar Alteração" action="#{alunoMB.editarAluno(aluno)}" update="@form" style="margin-right:10px" ajax="false"/>
-            <p:commandButton value="Cancelar" immediate="true" action="listaAluno.xhtml" style="margin-right:10px" ajax="false"/>
-            </p:panel>
-        </h:form>
+            <p:panel style="font: sans-serif; font-size: medium" header="Alterar Dados do Aluno" id="cadastrarAluno">
+            <p:messages autoUpdate="true"/>
+            <p:wizard style="font-size: small">
+        
+                <p:tab title="Dados do Aluno">  
+                <h:panelGrid style="font-size: small;" id="dadosAluno"  columns="3" cellpadding="1" cellspacing="1"> 
 
+                    <h:outputLabel  for="nome" value="Nome Completo do Aluno:" style="font-weight:bold"/> 
+                    <p:inputText required="true" id="nome" requiredMessage="Campo Obrigatório!" value="#{alunoMB.aluno.nome}">
+                        <f:validateLength minimum="2"/>
+                    </p:inputText>
+                    <p:message for="nome" display="icon"/>
+                
+
+                <h:outputLabel for="sexo" style="font-weight:bold" value="Selecione o sexo:"/>
+                <p:selectOneMenu id="sexo" value="#{alunoMB.aluno.sexo}">
+                    <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                    <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>                               
+                </p:selectOneMenu>
+                <br/>
+                <h:outputLabel style="font-weight:bold" for="dataNascimento" value="Data de Nascimento:"/>
+                <p:inputMask required="true" requiredMessage="Campo Obrigatório!" id="dataNascimento" value="#{alunoMB.aluno.datanascimento}" mask="99/99/9999"/> 
+                <p:message for="dataNascimento" display="icon"/>
+                
+
+
+
+
+                <h:outputText value="Turma: " style="font-weight:bold" />  
+                <p:selectOneMenu id="turma" value="#{alunoMB.codTurma}">  
+                <f:selectItem itemLabel="Maternal" itemValue="1" />  
+                <f:selectItem itemLabel="Jardim I" itemValue="2" />  
+                <f:selectItem itemLabel="Jardim II" itemValue="3" />     
+            </p:selectOneMenu>  
+                 <br/>
+
+                </h:panelGrid>
+            </p:tab>
+
+            <p:tab title="Dados dos Pais">   
+                <h:panelGrid style="font-size: small;" id="dadosPais"  columns="6" cellpadding="1" cellspacing="1"> 
+                 <h:outputLabel for="nomePai" value="Nome Completo do Responsável:" style="font-weight:bold"/> 
+                 <p:inputText required="true" requiredMessage="Campo Obrigatório!" id="nomePai" value="#{alunoMB.aluno.nomeresponsavel}"/>
+                 <p:message for="nomePai" display="icon"/>
+
+                <h:outputLabel for="cpfPai" value="CPF do Responsável:" style="font-weight:bold"/> 
+                <p:inputMask required="true" requiredMessage="Campo Obrigatório!" id="cpfPai" value="#{alunoMB.aluno.cpfresponsavel}" mask="999.999.999-99"/>
+                <p:message for="cpfPai" display="icon"/>
+                
+                </h:panelGrid>
+                <p:commandButton value="Confirmar" action="#{alunoMB.editarAluno()}" update="@form" style="margin-right:10px" ajax="false"/>
+                <p:commandButton value="Cancelar" update="formCadastroAlunos" action="#{alunoMB.removeSessão()}" style="margin-right:10px" ajax="false"/>
+            </p:tab>   
+            </p:wizard>
+            </p:panel>
+            
+        </h:form>
+        </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

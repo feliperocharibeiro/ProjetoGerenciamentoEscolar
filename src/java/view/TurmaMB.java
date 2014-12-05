@@ -11,6 +11,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import model.Aluno;
 import model.Turma;
 
@@ -100,7 +101,7 @@ public class TurmaMB {
         }
     }
 
-    public void salvarTurma() {
+    public String salvarTurma() {
         try {
             turmaDAO = new TurmaDAO();
             turmaDAO.salvarTurma(turma);
@@ -108,7 +109,12 @@ public class TurmaMB {
         } catch (Exception e) {
             System.out.println(e);
         }
-
+        return "/template.xhtml?faces-redirect=true";
     }
-    
+    public String removeSessão(){
+             if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("TurmaMB")){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("TurmaMB");
+             }
+             return "/template.xhtml?faces-redirect=true";
+    }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import model.Aluno;
 import model.Frequencia;
 
@@ -103,6 +104,18 @@ public class FrequenciaMB {
         }
     }
     
+    public List<Frequencia> findByCodAluno(){
+        try {
+            alunoDAO = new AlunoDAO();
+            frequenciaDAO = new FrequenciaDAO();
+            return frequenciaDAO.findBycodAluno(alunoDAO.findById(codAluno));
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+        
+    }
+    
     public void apagarFrequencia(Frequencia frequencia) {
         try {
             frequenciaDAO.removerFrequencia(frequencia);
@@ -119,7 +132,7 @@ public class FrequenciaMB {
         }
     }
     
-    public void registrarFrequencia() {
+    public String registrarFrequencia() {
         try {
             
             frequenciaDAO = new FrequenciaDAO();
@@ -139,6 +152,12 @@ public class FrequenciaMB {
         } catch (Exception e) {
             System.out.println(e);
         }
-
+        return "/template.xhtml?faces-redirect=true";
+    }
+    public String removeSessão(){
+             if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("FrequenciaMB")){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("FrequenciaMB");
+             }
+             return "/template.xhtml?faces-redirect=true";
     }
 }

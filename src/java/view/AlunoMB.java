@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import model.Aluno;
 import model.Endereco;
 import model.Frequencia;
@@ -48,8 +49,10 @@ public class AlunoMB {
     private String codUf;
     private int codAluno;
     
+    
     private List<Aluno> filtroAlunos;
     private List<Aluno> alunosSelecionados;
+    
 
     public List<Aluno> getAlunosSelecionados() {
         return alunosSelecionados;
@@ -171,10 +174,6 @@ public class AlunoMB {
             alunoDAO = new AlunoDAO();
             listaAluno = alunoDAO.findByTurma(turmaDAO.findById(codTurma));
             
-            System.out.println("Tamanho da lista:"+listaAluno.size());
-            for(Aluno a:listaAluno){
-                System.out.println("lista do for:"+a.getNome());
-            }
             return listaAluno;
         } catch (Exception e) {
             System.out.println(e);
@@ -200,12 +199,19 @@ public class AlunoMB {
         }
     }
 
-    public void editarAluno(Aluno aluno) {
+    public String editarAluno() {
         try {
+            turmaDAO = new TurmaDAO();
+            alunoDAO = new AlunoDAO();
+            aluno.setCodturma(turmaDAO.findById(codTurma));
             alunoDAO.salvarAluno(aluno);
         } catch (Exception e) {
             System.out.println(e);
         }
+        if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("alunoMB")){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("alunoMB");
+             }
+        return "/template.xhtml?faces-redirect=true";
     }
     
     public void registrarFrequencia(){
@@ -223,7 +229,7 @@ public class AlunoMB {
         }
     }
 
-    public void salvarAluno() {
+    public String salvarAluno() {
         try {
             turmaDAO = new TurmaDAO();
             alunoDAO = new AlunoDAO();
@@ -247,9 +253,16 @@ public class AlunoMB {
         } catch (Exception e) {
             System.out.println(e);
         }
-
+           return "/template.xhtml?faces-redirect=true";
     }
 
+    public String removeSessão(){
+             if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("alunoMB")){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("alunoMB");
+             }
+             return "/template.xhtml?faces-redirect=true";
+    }
+    
     public String prepararAlterarAluno(Aluno aluno) {
         this.setAluno(aluno);
         this.aluno.setCodaluno(this.getAluno().getCodaluno());

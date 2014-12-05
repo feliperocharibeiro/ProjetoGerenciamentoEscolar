@@ -11,54 +11,57 @@
     <h:body>
         <ui:composition template="/template.xhtml">
         <ui:define name="body">
-            <h:form>
-            <h:panelGrid columns="1" cellpadding="5">
-                <p:column>
-                    <p:outputLabel for="turma" value="Turma:"/>
-                    <p:selectOneMenu id="turma" value="#{alunoMB.codTurma}" style="width:150px" var="turma" required="true">
-                        <p:ajax listener="#{alunoMB.findByTurma()}" update="cadastraNota"/>
-                        <f:selectItems value="#{turmaMB.findAll()}" var="turma" itemLabel="#{turma.descricao}" itemValue="#{turma.codturma}"/>
-                        </p:selectOneMenu>
-                </p:column>
-                <p:column>
-                    <p:outputLabel for="periodo" value="Período:"/>
-                    <p:selectOneMenu id="periodo" value="#{materiaAlunoMB.periodo}" style="width:150px" var="materia" required="true">
-                            <f:selectItem itemLabel="Primeiro Bimestre" itemValue="Primeiro Bimestre"/>
-                            <f:selectItem itemLabel="Segundo Bimestre" itemValue="Segundo Bimestre"/>
-                            <f:selectItem itemLabel="Terceiro Bimestre" itemValue="Terceiro Bimestre"/>
-                            <f:selectItem itemLabel="Quarto Bimestre" itemValue="Quarto Bimestre"/>
-                    </p:selectOneMenu>
-                </p:column>
-                <p:column>
-                    <p:outputLabel for="materia" value="Matéria:"/>
-                    <p:selectOneMenu id="materia" value="#{materiaMB.codMateria}" style="width:150px" var="materia" required="true">
-                        <p:ajax listener="#{materiaMB.findById()}" />
-                        <f:selectItems value="#{materiaMB.findAll()}" var="materia" itemLabel="#{materia.descricao}" itemValue="#{materia.codmateria}"/>
-                        </p:selectOneMenu>
-                </p:column>
-                
-                <p:dataTable emptyMessage="Selecione a turma." id="cadastraNota" value="#{alunoMB.listaAluno}" 
-                             var="alunoNota">
-                    <p:column headerText="ID">  
-                         <h:outputLabel value="#{alunoNota.codaluno}"/>
-                    </p:column>
-                    <p:column headerText="Nome">  
-                         <h:outputLabel value="#{alunoNota.nome}"/>
-                    </p:column>
+            <h:form id="formCadastroNota">
+                <p:panel style="font: sans-serif; font-size: medium" header="Cadastro de Notas" id="cadastrarNota">
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:column>
+                            <p:outputLabel for="turma" value="Turma:"/>
+                            <p:selectOneMenu id="turma" value="#{alunoMB.codTurma}" style="width:150px" var="turma" required="true">
+                                <p:ajax listener="#{alunoMB.findByTurma()}" update="cadastraNota"/>
+                                <f:selectItems value="#{turmaMB.findAll()}" var="turma" itemLabel="#{turma.descricao}" itemValue="#{turma.codturma}"/>
+                                </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel for="periodo" value="Período:"/>
+                            <p:selectOneMenu id="periodo" value="#{materiaAlunoMB.periodo}" style="width:150px" var="materia" required="true">
+                                    <f:selectItem itemLabel="Primeiro Bimestre" itemValue="Primeiro Bimestre"/>
+                                    <f:selectItem itemLabel="Segundo Bimestre" itemValue="Segundo Bimestre"/>
+                                    <f:selectItem itemLabel="Terceiro Bimestre" itemValue="Terceiro Bimestre"/>
+                                    <f:selectItem itemLabel="Quarto Bimestre" itemValue="Quarto Bimestre"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel for="materia" value="Matéria:"/>
+                            <p:selectOneMenu id="materia" value="#{materiaMB.codMateria}" style="width:150px" var="materia" required="true">
+                                <p:ajax listener="#{materiaMB.findById()}" />
+                                <f:selectItems value="#{materiaMB.findAll()}" var="materia" itemLabel="#{materia.descricao}" itemValue="#{materia.codmateria}"/>
+                                </p:selectOneMenu>
+                        </p:column>
 
-                     <p:column headerText="Nota">  
-                         <p:selectOneMenu id="nota" value="#{alunoNota.nota}">
-                            <f:selectItem itemLabel="Ótimo" itemValue="O"/>
-                            <f:selectItem itemLabel="Muito Bom" itemValue="MB"/>
-                            <f:selectItem itemLabel="Bom" itemValue="B"/>
-                            <f:selectItem itemLabel="Regular" itemValue="R"/>
-                        </p:selectOneMenu>
-                    </p:column>
-                </p:dataTable>
-                <p:column>
-                    <p:commandButton action="#{materiaAlunoMB.salvarNota()}" value="Salvar Notas" />
-                </p:column>
-            </h:panelGrid>
+                        <p:dataTable emptyMessage="Selecione a turma." id="cadastraNota" value="#{alunoMB.listaAluno}" 
+                                     var="alunoNota">
+                            <p:column headerText="ID">  
+                                 <h:outputLabel value="#{alunoNota.codaluno}"/>
+                            </p:column>
+                            <p:column headerText="Nome">  
+                                 <h:outputLabel value="#{alunoNota.nome}"/>
+                            </p:column>
+
+                             <p:column headerText="Nota">  
+                                 <p:selectOneMenu id="nota" value="#{alunoNota.nota}">
+                                    <f:selectItem itemLabel="Ótimo" itemValue="O"/>
+                                    <f:selectItem itemLabel="Muito Bom" itemValue="MB"/>
+                                    <f:selectItem itemLabel="Bom" itemValue="B"/>
+                                    <f:selectItem itemLabel="Regular" itemValue="R"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:dataTable>
+                        <p:column>
+                            <p:commandButton action="#{materiaAlunoMB.salvarNota()}" value="Salvar Notas" />
+                            <p:commandButton value="Cancelar" update="formCadastroNota" action="#{materiaMB.removeSessão()}" style="margin-right:10px" ajax="false"/>
+                        </p:column>
+                    </h:panelGrid>
+                </p:panel>
             </h:form>
         </ui:define>
         </ui:composition>

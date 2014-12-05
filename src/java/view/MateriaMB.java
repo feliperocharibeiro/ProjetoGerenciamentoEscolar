@@ -11,6 +11,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import model.Materia;
 
 /**
@@ -83,7 +84,7 @@ public class MateriaMB {
     public List<Materia> findById(){
         try {
             materiaDAO = new MateriaDAO();
-            System.out.println(codMateria);
+
             listaMateria = materiaDAO.findById(codMateria);
             return listaMateria;
         } catch (Exception e) {
@@ -108,7 +109,7 @@ public class MateriaMB {
         }
     }
     
-    public void salvarMateria() {
+    public String salvarMateria() {
         try {
             
             materiaDAO = new MateriaDAO();
@@ -119,7 +120,13 @@ public class MateriaMB {
         } catch (Exception e) {
             System.out.println(e);
         }
-
+        return "/template.xhtml?faces-redirect=true";
     }
     
+    public String removeSessão(){
+             if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("materiaMB")){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("materiaMB");
+             }
+             return "/template.xhtml?faces-redirect=true";
+    }
 }

@@ -29,7 +29,7 @@ public class TurmaDAO extends Classe {
     }
     public List<Turma> findAll(){
         em.getTransaction().begin();
-        query = em.createQuery("SELECT t FROM Turma t");
+        query = em.createQuery("SELECT t FROM Turma t ORDER BY t.codturma");
         em.getTransaction().commit();
         return query.getResultList();
     }

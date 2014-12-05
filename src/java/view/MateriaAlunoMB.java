@@ -13,6 +13,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import model.Aluno;
 import model.Materia;
 import model.MateriaAluno;
@@ -36,6 +37,7 @@ public class MateriaAlunoMB {
     private String nota;
     private String codMateria;
     private String periodo;
+    private int codAluno;
     
     @ManagedProperty(value="#{alunoMB}")
     private AlunoMB alunoMB;
@@ -47,6 +49,15 @@ public class MateriaAlunoMB {
         materiaAluno = new MateriaAluno();
     }
 
+    public int getCodAluno() {
+        return codAluno;
+    }
+
+    public void setCodAluno(int codAluno) {
+        this.codAluno = codAluno;
+    }
+
+        
     public String getPeriodo() {
         return periodo;
     }
@@ -168,15 +179,12 @@ public class MateriaAlunoMB {
             List<Aluno> lista = alunoMB.getListaAluno();
             List<Materia> listaMateria = materiaMB.getListaMateria();
             
-            System.out.println("Tamanho lista em Materia:"+lista.size());
-            System.out.println("Tamanho da Lista de Materia:" + listaMateria.size());
             for(Materia m:listaMateria){
             for(Aluno a:lista){
-                System.out.println("Lista da Materia:"+a.getNome());
-                System.out.println("Nome da Materia:"+m.getDescricao());
+
                 materiaAluno.setCodaluno(a);
                 materiaAluno.setCodmateria(m);
-                System.out.println("NOTA"+a.getNota());
+
                 materiaAluno.setNota(a.getNota());
                 materiaAluno.setPeriodo(periodo);
                 
@@ -187,19 +195,47 @@ public class MateriaAlunoMB {
         } catch (Exception e) {
             System.out.println(e);
         }
-        return "cadastroNota.xhtml";
+        if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("materiaAlunoMB")){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("materiaAlunoMB");
+             }
+        return "/template.xhtml?faces-redirect=true";
     }
     
     public List<MateriaAluno> findByPeriodo(){
         try {
             materiaDAO = new MateriaDAO();
             materiaAlunoDAO = new MateriaAlunoDAO();
-            System.out.println(periodo);
+
             return materiaAlunoDAO.findByPeriodo(periodo);
         } catch (Exception e) {
             System.out.println(e);
             return null;
         }
         
+    }
+    
+    public List<MateriaAluno> findByCodAluno(){
+        try {
+            alunoDAO = new AlunoDAO();
+            materiaAlunoDAO = new MateriaAlunoDAO();
+
+            return materiaAlunoDAO.findBycodAluno(alunoDAO.findById(codAluno));
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+        
+    }
+    
+    public String removeSessão(){
+             if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("MateriaAlunoMB")){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("MateriaAlunoMB");
+             }
+             return "/template.xhtml?faces-redirect=true";
+    }
+    public String prepararMostrarNota(Aluno aluno) {
+        this.setAluno(aluno);
+        this.aluno.setCodaluno(this.getAluno().getCodaluno());
+        return "notaAlun.xhtml";
     }
 }

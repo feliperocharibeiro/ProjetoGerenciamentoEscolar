@@ -9,14 +9,12 @@
         <title>Cadastro de Alunos</title>
     </h:head>
     <h:body>
-        <script src="funcoes.js" type="text/javascript"></script>
         
         <ui:composition template="/template.xhtml">
         <ui:define name="body">
         <h:form id="formCadastroAlunos">
         <p:panel style="font: sans-serif; font-size: medium" header="Cadastro de Alunos" id="cadastrarAluno">
             <p:messages autoUpdate="true"/>
-            <!--<p:tabView style="font-size: small">-->
             <p:wizard style="font-size: small">
         
             <p:tab title="Dados do Aluno">  
@@ -57,7 +55,9 @@
             <p:tab title="Dados dos Pais">   
                 <h:panelGrid style="font-size: small;" id="dadosPais"  columns="6" cellpadding="1" cellspacing="1"> 
                  <h:outputLabel for="nomePai" value="Nome Completo do Responsável:" style="font-weight:bold"/> 
-                 <p:inputText required="true" requiredMessage="Campo Obrigatório!" id="nomePai" value="#{alunoMB.aluno.nomeresponsavel}"/>
+                 <p:inputText required="true" requiredMessage="Campo Obrigatório!" id="nomePai" value="#{alunoMB.aluno.nomeresponsavel}">
+                     <f:validateLength minimum="2"/>
+                 </p:inputText>
                  <p:message for="nomePai" display="icon"/>
 
                 <h:outputLabel for="cpfPai" value="CPF do Responsável:" style="font-weight:bold"/> 
@@ -72,24 +72,30 @@
                 <p:tab title="Endereço">  
                 <h:panelGrid style="font-size: small;" id="dadosEndereco"  columns="4" cellpadding="1" cellspacing="1"> 
                 <h:outputLabel for="rua" value="Rua:" style="font-weight:bold"/> 
-                <p:inputText required="true" requiredMessage="Campo Obrigatório!" id="rua" value="#{alunoMB.endereco.logradouro}" maxlength="40"/>
-                <p:message for="rua" display="icon"/>
+                <p:inputText required="true" requiredMessage="Campo Obrigatório!" id="rua" value="#{alunoMB.endereco.logradouro}" maxlength="40">
+                <f:validateLength minimum="2"/>
+                </p:inputText>
+                
 
                 <h:outputLabel for="numero" value="Número:" style="font-weight:bold"/> 
                 <p:inputText required="true" requiredMessage="Campo Obrigatório!" id="numero" size="5" value="#{alunoMB.endereco.numero}"/>
-                <p:message for="numero" display="icon"/>
+                
 
                 <h:outputLabel for="complemento" value="Complemento:" style="font-weight:bold"/> 
                 <p:inputText required="false" id="complemento" value="#{alunoMB.endereco.complemento}"/>
 
                 <h:outputLabel for="bairro" value="Bairro:" style="font-weight:bold"/> 
-                <p:inputText required="true" requiredMessage="Campo Obrigatório!" id="bairro" value="#{alunoMB.endereco.bairro}"/>
-                <p:message for="bairro" display="icon"/>
+                <p:inputText required="true" requiredMessage="Campo Obrigatório!" id="bairro" value="#{alunoMB.endereco.bairro}">
+                <f:validateLength minimum="2"/>
+                </p:inputText>
+                
 
 
                 <h:outputLabel for="cidade" value="Cidade:" style="font-weight:bold"/> 
-                <p:inputText required="true" requiredMessage="Campo Obrigatório!" id="cidade" value="#{alunoMB.endereco.cidade}"/>
-                <p:message for="cidade" display="icon"/>
+                <p:inputText required="true" requiredMessage="Campo Obrigatório!" id="cidade" value="#{alunoMB.endereco.cidade}">
+                <f:validateLength minimum="2"/>
+                </p:inputText>
+                
                 
                 <h:outputText value="Estado: " style="font-weight:bold" />  
                 <p:selectOneMenu id="uf" value="#{alunoMB.codUf}">  
@@ -124,11 +130,11 @@
 
                 <h:outputLabel for="cep" value="CEP:" style="font-weight:bold"/> 
                 <p:inputMask required="true" requiredMessage="Campo Obrigatório!" id="cep" value="#{alunoMB.endereco.cep}" mask="99.999-999"/>
-                <p:message for="cep" display="icon"/>
+                
 
                 <h:outputLabel style="font-weight:bold" for="telefone" value="Telefone de Contato:"/>
-                <p:inputMask required="true" requiredMessage="Campo Obrigatório!" id="Telefone" value="#{alunoMB.telefone.telefone}" mask="(99)9999-9999"/>
-                <p:message for="telefone" display="icon"/>
+                <p:inputMask required="true" requiredMessage="Campo Obrigatório!" id="telefone" value="#{alunoMB.telefone.telefone}" mask="(99)9999-9999"/>
+                
                 
                 </h:panelGrid>
                 
@@ -190,16 +196,15 @@
                     </h:panelGrid>
                         
                 </h:panelGrid>
-                    
+                    </p:panel>
                 <p:commandButton value="Confirmar" action="#{alunoMB.salvarAluno()}" update="@form" style="margin-right:10px" ajax="false"/>
-                </p:panel>
+                <p:commandButton value="Cancelar" update="formCadastroAlunos" action="#{alunoMB.removeSessão()}" style="margin-right:10px" ajax="false"/>
                 </p:tab>
                     
                 </p:wizard>
-                <!--</p:tabView>-->
+
         </p:panel>
             
-            <p:separator/>
 
            
         </h:form>

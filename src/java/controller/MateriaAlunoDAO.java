@@ -3,6 +3,7 @@ package controller;
 
 import Util.Classe;
 import java.util.List;
+import model.Aluno;
 import model.Materia;
 import model.MateriaAluno;
 
@@ -33,8 +34,13 @@ public class MateriaAlunoDAO extends Classe{
     public List<MateriaAluno> findByPeriodo(String periodo){
         em.getTransaction().begin();
         periodo = "%"+periodo+"%";
-        System.out.println("Periodo no lado do DAO:"+periodo);
         query = em.createNamedQuery("MateriaAluno.findByPeriodo").setParameter("periodo", periodo);
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
+    public List<MateriaAluno> findBycodAluno(Aluno aluno){
+        em.getTransaction().begin();
+        query = em.createNamedQuery("MateriaAluno.findByCodAluno").setParameter("codaluno", aluno);
         em.getTransaction().commit();
         return query.getResultList();
     }

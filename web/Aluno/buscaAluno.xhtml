@@ -14,11 +14,12 @@
         
         <ui:composition template="/template.xhtml">
             <ui:define name="body">
-        <h:form>            
+        <h:form>
             <h:panelGrid cellpadding="5" style="left: 25%;height: 800px">
                     
                 <p:dataTable emptyMessage="Nada foi encontrado!" value="#{alunoMB.findAll()}" filteredValue="#{alunoMB.filtroAlunos}"
-                             widgetVar="AlunoTable" var="aluno">
+                             widgetVar="AlunoTable" var="aluno" rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
                     <f:facet name="header">
                         <p:outputPanel>
                         <h:outputText value="Digite o nome do aluno:" />
@@ -31,25 +32,26 @@
                     <p:column headerText="Nome" filterBy="#{aluno.nome}">
                         <h:outputLabel value="#{aluno.nome}"/>
                     </p:column>
-                    <p:column headerText="Bairro">
-                        <h:dataTable value="#{aluno.enderecoList}" var="endereco" style="border: 0px #fff solid;">
-                            <h:column>#{endereco.bairro}</h:column>
-                        </h:dataTable>
+                    <p:column headerText="Turma">
+                        <h:outputLabel value="#{aluno.codturma.descricao}"/>
                     </p:column>
-                    <p:column headerText="Telefone">
-                        <h:dataTable value="#{aluno.telefoneList}" var="telefone" style="border: 0px #fff solid;">
-                            <h:column>#{telefone.telefone}</h:column>
-                        </h:dataTable>
+                    <p:column headerText="Nascimento">
+                        <h:outputLabel value="#{aluno.datanascimento}"/>
                     </p:column>
+                    
                     
                     <p:column>
                         <p:commandButton icon="ui-icon-search" title="Informações do Aluno" actionListener="#{alunoMB.mostrarAluno(aluno)}" onsuccess="PF('InfoAluno').show();"/>
                     </p:column>
+                    
                     <p:column>
                         <p:commandButton image="excluir" icon="ui-icon-trash" title="Apagar" action="#{alunoMB.apagarAluno(aluno)}" ajax="false"/>
                     </p:column>
+                    
                     <p:column>
-                        <p:commandButton image="editar" icon="ui-icon-pencil" title="Editar" action="#{alunoMB.prepararAlterarAluno(aluno)}" ajax="false"/>
+                        <p:commandButton image="editar" icon="ui-icon-pencil" title="Editar" action="#{alunoMB.prepararAlterarAluno(aluno)}" ajax="false">
+                            <f:setPropertyActionListener value="#{aluno}" target="#{alunoMB.aluno}"/> 
+                        </p:commandButton>
                     </p:column>
                     
                 </p:dataTable>
@@ -121,7 +123,7 @@
                 </p:dataTable>
                 
                 <p:commandButton onclick="dialog.hide()" process="@none" value="Fechar" style="font-size: small"/>
-            </p:dialog>   
+            </p:dialog> 
         </h:form>
         </ui:define>
         </ui:composition>

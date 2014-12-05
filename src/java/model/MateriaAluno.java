@@ -29,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MateriaAluno.findAll", query = "SELECT m FROM MateriaAluno m"),
-    @NamedQuery(name = "MateriaAluno.findByPeriodo", query = "SELECT m FROM MateriaAluno m WHERE m.periodo LIKE :periodo"),
+    @NamedQuery(name = "MateriaAluno.findByPeriodo", query = "SELECT m FROM MateriaAluno m WHERE m.periodo LIKE :periodo AND m.codaluno = :codaluno"),
+    @NamedQuery(name = "MateriaAluno.findByCodAluno", query = "SELECT m FROM MateriaAluno m WHERE m.codaluno = :codaluno"),
     @NamedQuery(name = "MateriaAluno.findByMateria", query = "SELECT m FROM MateriaAluno m WHERE m.codmateria = :codmateria"),
     @NamedQuery(name = "MateriaAluno.findByIdmateriaaluno", query = "SELECT m FROM MateriaAluno m WHERE m.idmateriaaluno = :idmateriaaluno")})
 public class MateriaAluno implements Serializable {

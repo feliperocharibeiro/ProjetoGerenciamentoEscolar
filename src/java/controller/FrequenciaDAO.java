@@ -8,6 +8,7 @@ package controller;
 
 import Util.Classe;
 import java.util.List;
+import model.Aluno;
 import model.Frequencia;
 
 /**
@@ -28,6 +29,12 @@ public class FrequenciaDAO extends Classe{
     public List<Frequencia> findAll(){
         em.getTransaction().begin();
         query = em.createQuery("SELECT f FROM Frequencia f");
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
+    public List<Frequencia> findBycodAluno(Aluno aluno){
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Frequencia.findByCodAluno").setParameter("codaluno", aluno);
         em.getTransaction().commit();
         return query.getResultList();
     }

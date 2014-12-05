@@ -2,16 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Buscar Notas</title>
+        <title>Mostrar Faltas</title>
     </h:head>
     <h:body>
         <ui:composition template="/template.xhtml">
-        <ui:define name="body">
-            <h:form>
+            <ui:define name="body">
+        <h:form>
+            <p:panel style="font: sans-serif; font-size: medium" header="Lista de Frequência" id="listaFrequencia">
             <h:panelGrid columns="1" cellpadding="5">
                 <p:column>
                     <p:outputLabel for="turma" value="Turma:"/>
@@ -23,35 +24,29 @@
                 
                 <p:column>
                     <p:outputLabel for="aluno" value="Aluno:"/>
-                    <p:selectOneMenu id="aluno" value="#{materiaAlunoMB.codAluno}" style="width:150px" var="aluno" required="true">
-                        <p:ajax listener="#{materiaAlunoMB.findByCodAluno()}" update="geraNota"/>
+                    <p:selectOneMenu id="aluno" value="#{frequenciaMB.codAluno}" style="width:150px" var="aluno" required="true">
+                        <p:ajax listener="#{frequenciaMB.findByCodAluno()}" update="tabelaFaltas"/>
                         <f:selectItems value="#{alunoMB.findByTurma()}" var="aluno" itemLabel="#{aluno.nome}" itemValue="#{aluno.codaluno}"/>
                         </p:selectOneMenu>
                 </p:column>
                 
-                
-                
-                <p:dataTable emptyMessage="Selecione a turma e o aluno." id="geraNota" value="#{materiaAlunoMB.findByCodAluno()}" 
-                             var="aluno">
-                    <p:column headerText="Nome">  
+                <p:dataTable id="tabelaFaltas" emptyMessage="Nada foi encontrado!" value="#{frequenciaMB.findByCodAluno()}" widgetVar="FaltasTable" var="aluno">
+                    <p:column headerText="Nome">
                         <h:outputLabel value="#{aluno.codaluno.nome}"/>
                     </p:column>
-                    <p:column headerText="Materia"  filterBy="#{aluno.codmateria.descricao}">  
-                        <h:outputLabel value="#{aluno.codmateria.descricao}"/>
+                    <p:column headerText="Data da Aula" filterBy="#{aluno.dataaula}">
+                        <h:outputLabel value="#{aluno.dataaula}">
+                            <f:convertDateTime dateStyle="short" type="date"/>
+                        </h:outputLabel>
                     </p:column>
-                    <p:column headerText="Periodo" filterBy="#{aluno.periodo}">  
-                        <h:outputLabel value="#{aluno.periodo}"/>
-                    </p:column>
-                    <p:column headerText="Nota">  
-                            <h:outputLabel value="#{aluno.nota}"/>
-                    </p:column>
-                    <p:column>
-                        <p:commandButton image="excluir" icon="ui-icon-trash" title="Apagar" actionListener="#{materiaAlunoMB.apagarMateriaAluno(aluno)}" ajax="false"/>
+                    <p:column headerText="Frequencia" filterBy="#{aluno.descricao}">
+                        <h:outputLabel value="#{aluno.descricao}"/>
                     </p:column>
                 </p:dataTable>
             </h:panelGrid>
-            </h:form>
-        </ui:define>
+            </p:panel>
+        </h:form>
+            </ui:define>
         </ui:composition>
     </h:body>
 </html>
