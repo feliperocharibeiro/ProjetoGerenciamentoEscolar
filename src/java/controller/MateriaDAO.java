@@ -27,7 +27,7 @@ public class MateriaDAO extends Classe{
     }
     public List<Materia> findAll(){
         em.getTransaction().begin();
-        query = em.createQuery("SELECT m FROM Materia m");
+        query = em.createQuery("SELECT m FROM Materia m ORDER BY m.codmateria");
         em.getTransaction().commit();
         return query.getResultList();
     }

@@ -59,70 +59,72 @@
             
             
             <p:dialog header="Informações do Aluno" widgetVar="InfoAluno" dynamic="true" modal="true" 
-                      closable="false" closeOnEscape="true" style="width:640px ">
+                      closable="false" style="width:640px ">
                     <table>    
                         <tr>                           
-                        <td>Id:</td><td>#{alunoMB.aluno.codaluno}</td>
+                            <td style="font-weight:bold">Id:</td><td>#{alunoMB.aluno.codaluno}</td>
                         </tr>
                         
                         <tr>
-                        <td>Nome:</td><td>#{alunoMB.aluno.nome}</td>
+                        <td style="font-weight:bold">Nome:</td><td>#{alunoMB.aluno.nome}</td>
                         </tr>
                         
                         <tr>
-                        <td>Sexo:</td><td>#{alunoMB.aluno.sexo}</td>
+                        <td style="font-weight:bold">Sexo:</td><td>#{alunoMB.aluno.sexo}</td>
                         </tr>
                         
                         <tr>
-                        <td>Data de Nascimento:</td><td>#{alunoMB.aluno.datanascimento}</td>
+                        <td style="font-weight:bold">Data de Nascimento:</td><td>#{alunoMB.aluno.datanascimento}</td>
                         </tr>
                         
                         <tr>
-                        <td>Nome do Responsável:</td><td>#{alunoMB.aluno.nomeresponsavel}</td>
+                        <td style="font-weight:bold">Nome do Responsável:</td><td>#{alunoMB.aluno.nomeresponsavel}</td>
                         </tr>
                         
                         <tr>
-                        <td>CPF do Responsável:</td><td>#{alunoMB.aluno.cpfresponsavel}</td>
+                        <td style="font-weight:bold">CPF do Responsável:</td><td>#{alunoMB.aluno.cpfresponsavel}</td>
                         </tr>
                         
                         
-                        </table>
-                <p:dataTable value="#{alunoMB.aluno.enderecoList}" var="enderecoPorId" style="border: none">
+                        <td style="font-weight:bold">Informações de Endereço:</td>
+                
+                <p:dataTable value="#{alunoMB.aluno.enderecoList}" var="enderecoPorId" style="border: #fff solid 0px; border-color: #fff; ">
                             
-                            <p:column>Rua:
-                            #{enderecoPorId.logradouro}
+                            <p:column style="border: #fff solid 0px;">Rua:
+                                #{enderecoPorId.logradouro}
                             </p:column>
                             
-                            <p:column>Número:
+                            <p:column style="border: #fff solid 0px;">Número:
                             #{enderecoPorId.numero}</p:column>
                             
-                            <p:column>Complemento:
+                            <p:column style="border: #fff solid 0px;">Complemento:
                             #{enderecoPorId.complemento}</p:column>
                             
-                            <p:column>Bairro:
+                            <p:column style="border: #fff solid 0px;">Bairro:
                             #{enderecoPorId.bairro}</p:column>
                             
-                            <p:column>Cidade:
+                            <p:column style="border: #fff solid 0px;">Cidade:
                             #{enderecoPorId.cidade}</p:column>
                             
-                            <p:column>Estado:
+                            <p:column style="border: #fff solid 0px;">Estado:
                             #{enderecoPorId.uf.descricao}</p:column>
                             
-                            <p:column>CEP:
+                            <p:column style="border: #fff solid 0px;">CEP:
                             #{enderecoPorId.cep}</p:column>
 
                 </p:dataTable>
-                
-
-                <p:dataTable value="#{alunoMB.aluno.telefoneList}" var="telefonePorId">
+                    </table>
+                <table>
+                        <td style="font-weight:bold">Telefone:</td>
+                <p:dataTable value="#{alunoMB.aluno.telefoneList}" var="telefonePorId" style="border: #fff solid 0px; border-color: #fff; ">
                     
-                            <p:column>Telefone:
+                            <p:column style="border: #fff solid 0px;">Telefone:
                             #{telefonePorId.telefone}    
                             </p:column> 
                     
                 </p:dataTable>
-                
-                <p:commandButton onclick="dialog.hide()" process="@none" value="Fechar" style="font-size: small"/>
+                    </table>
+                <p:commandButton onclick="dialog.hide()" actionListener="#{alunoMB.removeSessão()}" process="@none" value="Fechar" style="font-size: small"/>
             </p:dialog> 
         </h:form>
         </ui:define>
